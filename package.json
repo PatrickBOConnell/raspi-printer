@@ -1,0 +1,11 @@
+{
+    "name": "raspi-printer",
+    "version": "0.0.1",
+    "dependencies": {
+        "express": "*",
+        "body-parser": "*",
+        "mongojs": "*",
+        "cookie-parser": "*",
+        "express-session": "*"
+    }
+}
