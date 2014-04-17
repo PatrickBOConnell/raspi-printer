@@ -308,7 +308,7 @@
 		    }
 		    var ords = Array.prototype.map.call(datastr, byteValue);
 		    var ui8a = new Uint8Array(ords);
-		    this.send(ui8a.buffer);
+		    this.send(ui8a);
 		}
 	} catch(e) {}
      
