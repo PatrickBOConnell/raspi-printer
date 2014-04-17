@@ -6,7 +6,7 @@ var express = require('express'),
         bodyParser = require('body-parser'),
         cookieParser = require('cookie-parser'),
         session = require('express-session'),
-        spawn = require('child_process').spawn;
+	sudo = require('sudo');
         
 var db = require('mongojs').connect('localhost/sampleSchool', ['teachers', 'rosters']);
 process.on('uncaughtException', function(err) {
@@ -145,7 +145,11 @@ app.post('/print', function(req, res){
     var name = req.body.name;
     var time = req.body.time;
     var reason = req.body.reason;
-    var print = spawn('python', ['print-pass.py', name, 'other param']);
+    var options = {
+        cachePassword: true,
+        prompt: 'raspberry',
+    };
+    var print = sudo(['./print-pass.py', name, time, reason], options);
     print.stdout.on('data', function(data){
         console.log('stdout: ' + data);
     });

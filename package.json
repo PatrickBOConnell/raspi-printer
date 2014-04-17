@@ -6,6 +6,7 @@
         "body-parser": "*",
         "mongojs": "*",
         "cookie-parser": "*",
-        "express-session": "*"
+        "express-session": "*",
+        "sudo": "*"
     }
 }
