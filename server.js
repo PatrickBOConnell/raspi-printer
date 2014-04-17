@@ -6,6 +6,7 @@ var express = require('express'),
         bodyParser = require('body-parser'),
         cookieParser = require('cookie-parser'),
         session = require('express-session'),
+        getRawBody = require('raw-body');
 	sudo = require('sudo');
         
 var db = require('mongojs').connect('localhost/sampleSchool', ['teachers', 'rosters']);
@@ -22,7 +23,19 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
-app.use(express.bodyParser());
+app.use(function (req, res, next) {
+  getRawBody(req, {
+    length: req.headers['content-length'],
+    limit: '1mb',
+    encoding: 'utf8'
+  }, function (err, string) {
+    if (err)
+      return next(err)
+
+    req.text = string;
+    next();
+  });
+});
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 app.use(session({secret:'secret stuff'}));
